@@ -3,6 +3,7 @@ import os.path as osp
 from mmcv.runner import Hook
 from torch.utils.data import DataLoader
 
+from openbayestool import log_param
 
 class EvalHook(Hook):
     """Evaluation hook.
@@ -45,6 +46,8 @@ class EvalHook(Hook):
             results, logger=runner.logger, **self.eval_kwargs)
         for name, val in eval_res.items():
             runner.log_buffer.output[name] = val
+            if name == 'mIoU':
+                log_metric("mIoU", val)  
         runner.log_buffer.ready = True
 
 

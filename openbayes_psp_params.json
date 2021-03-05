@@ -1,0 +1,12 @@
+{
+    "metrics": "mIoU",
+    "image_width": 512,
+    "image_height": 512,
+    "classes": ["background", "aeroplane", "bicycle", "bird", "boat", "bottle",
+               "bus", "car", "cat", "chair", "cow", "table", "dog", "horse",
+               "motorbike", "person", "pottedplant", "sheep", "sofa", "train",
+               "tvmonitor"],
+    "resnet_depth": "r50",	       
+    "batch_size": 8,
+    "epochs": 12
+}
