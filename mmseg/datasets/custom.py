@@ -67,12 +67,13 @@ class CustomDataset(Dataset):
             Default: None
     """
 
-    CLASSES = None
+    #CLASSES = None
 
     PALETTE = None
 
     def __init__(self,
                  pipeline,
+                 ann_file,
                  img_dir,
                  img_suffix='.jpg',
                  ann_dir=None,
@@ -85,6 +86,7 @@ class CustomDataset(Dataset):
                  classes=None,
                  palette=None):
         self.pipeline = Compose(pipeline)
+        self.ann_file = ann_file
         self.img_dir = img_dir
         self.img_suffix = img_suffix
         self.ann_dir = ann_dir
@@ -95,8 +97,9 @@ class CustomDataset(Dataset):
         self.ignore_index = ignore_index
         self.reduce_zero_label = reduce_zero_label
         self.label_map = None
-        self.CLASSES, self.PALETTE = self.get_classes_and_palette(
-            classes, palette)
+        
+        #self.CLASSES, self.PALETTE = self.get_classes_and_palette(
+            #classes, palette)
 
         # join paths if data_root is specified
         if self.data_root is not None:
@@ -231,7 +234,9 @@ class CustomDataset(Dataset):
         """Get ground truth segmentation maps for evaluation."""
         gt_seg_maps = []
         for img_info in self.img_infos:
-            seg_map = osp.join(self.ann_dir, img_info['ann']['seg_map'])
+            #print('info', self.ann_dir, img_info['ann']['seg_map'])
+            #seg_map = osp.join(self.ann_dir, img_info['ann']['seg_map'])
+            seg_map = img_info['ann']['seg_map']
             if efficient_test:
                 gt_seg_map = seg_map
             else:

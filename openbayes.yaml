@@ -1,0 +1,24 @@
+data_binding: 
+- data: lizhuyun/eFRNNKkewTd/2
+  path: /input0
+resource: TITAN_RTX
+env: pytorch-1.6
+command: "pip install --user pytest-runner && pip install mmcv-full==1.2.1 -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html && python setup.py develop && python openbayes.py --input /input0/ --output model_output --model pspnet --hparams ./openbayes_psp_opdata_params.json"
+hyper_tuning:
+  max_job_count: 30
+  hyperparameter_metric: mIoU
+  goal: MAXIMIZE
+  algorithm: Bayesian
+  parameter_specs:
+  - name: filters
+    type: DISCRETE
+    discrete_values: [8, 16, 32]
+  - name: dropout
+    type: DISCRETE
+    discrete_values: [0.01, 0.1, 0.3, 0.5]
+  - name: opt
+    type: CATEGORICAL
+    categorical_values: ["sgd", "adam", "adadelta"]
+  - name: nn
+    type: DISCRETE
+    discrete_values: [16, 32, 64, 128]
