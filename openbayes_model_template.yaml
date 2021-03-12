@@ -1,0 +1,54 @@
+name: "openbayes-model-psp"
+instruction: "自动建模 psp 模型"
+default_runtime: pytorch-1.6.0
+resource_candidates:
+- titanv
+prefix_command:  "pip install mmcv-full==1.2.1 -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html && python setup.py develop && python openbayes.py --input /input0/ --output model_output --model pspnet --hparams /output/openbayes_params.json"
+access_path: ./model_output
+default_max_job_count: 5
+default_parallel_count: 1
+default_bindings:
+  - lizhuyun/camvid/2:/input0
+algorithms:
+- Random
+metrics: mIoU
+side_metrics: []
+goal: MAXIMIZE
+solution: SEMANTIC_SEGMENTATION
+default_parameters:
+- name: image_width
+  value: 480
+- name: image_height
+  value: 360
+- name: classes
+  value: ["background", "aeroplane", "bicycle", "bird", "boat", "bottle",
+               "bus", "car", "cat", "chair", "cow", "table"]
+- name: batch_size
+  value: 8
+- name: epochs
+  value: 20k
+- name: resnet_depth
+  value: r50
+- name: lr_schd
+  value: 1x
+- name: loss
+  value: cross_entropy
+parameter_specs:
+- name: resnet_depth
+  type: CATEGORICAL
+  categorical_values:
+  - "r50"
+  - "r101"
+  - "r50b"
+  - "r101b"
+- name: lr_schd
+  type: CATEGORICAL
+  categorical_values:
+  - 1x
+  - 2x
+- name: loss
+  type: CATEGORICAL
+  categorical_values:
+  - cross_entropy
+  - dice_loss
+  - lovasz_softmax

@@ -1,0 +1,14 @@
+{
+    "metrics": "mIoU",
+    "image_width": 480,
+    "image_height": 360,
+    "classes": ["background", "aeroplane", "bicycle", "bird", "boat", "bottle",
+               "bus", "car", "cat", "chair", "cow", "table"],
+    "palette": [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11]],
+    "resnet_depth": "r50",
+    "batch_size": 8,
+    "epochs": "20k",
+    "resnet_depth": "r50",
+    "lr_schd": "1x",
+    "loss": "dice_loss"
+}
